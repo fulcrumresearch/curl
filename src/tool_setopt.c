@@ -647,8 +647,8 @@ CURLcode tool_setopt_ptr(CURL *curl, const char *name, CURLoption tag, ...)
   DEBUGASSERT(tag < CURLOPTTYPE_BLOB);
 
   va_start(arg, tag);
-  /* argument is an object or function pointer */
-  pval = va_arg(arg, void *);
+  /* NOLINTNEXTLINE(clang-analyzer-valist.Uninitialized) */
+  pval = va_arg(arg, void *);  /* argument is an object or function pointer */
 
   result = curl_easy_setopt(curl, tag, pval);
   if(global->libcurl && pval && !result) {
@@ -677,8 +677,8 @@ CURLcode tool_setopt_str(CURL *curl, struct OperationConfig *config,
   DEBUGASSERT(tag < CURLOPTTYPE_FUNCTIONPOINT);
 
   va_start(arg, tag);
-  /* argument is a string */
-  str = va_arg(arg, char *);
+  /* NOLINTNEXTLINE(clang-analyzer-valist.Uninitialized) */
+  str = va_arg(arg, char *);  /* argument is a string */
 
   result = curl_easy_setopt(curl, tag, str);
   if(global->libcurl && str && !result) {
